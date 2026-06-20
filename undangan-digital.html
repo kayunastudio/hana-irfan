@@ -7,18 +7,19 @@
     <!-- Google Fonts untuk Kombinasi Tradisional Kontemporer -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght=0,400;0,600;1,400&display=swap" rel="stylesheet">
     
     <style>
         /* ==========================================================================
-           COLOR PALETTE & CORE STYLES (Tema Baru: Emerald Green, Maroon & Cream Accent)
+           COLOR PALETTE & CORE STYLES (Tema: Emerald Green, Maroon & Cream Accent)
            ========================================================================= */
         :root {
-            --bg-cream-accent: #F4EAE6; /* Aksen warna Cream hangat */
+            /* CUSTOMIZABLE: Ubah kode hex warna di bawah ini jika ingin mengganti warna tema */
+            --bg-cream-accent: #F4EAE6; 
             --bg-pure-white: #FFFFFF;
-            --primary-emerald: #0B4434; /* Warna Emerald Green utama */
-            --primary-maroon: #4A2828;  /* Warna Maroon utama */
-            --dark-emerald-bg: #052B20; /* Latar belakang Emerald gelap untuk Gift & RSVP */
+            --primary-emerald: #0B4434; 
+            --primary-maroon: #4A2828;  
+            --dark-emerald-bg: #052B20; 
             --accent-warm-gold: #C5A059;
             --text-dark: #1E2A27;
             --text-muted: #5F6E6A;
@@ -61,6 +62,82 @@
             display: none;
         }
 
+        /* ==========================================================================
+           SISTEM ANIMASI SCROLL REVEAL
+           ========================================================================== */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1.2s cubic-bezier(0.215, 0.610, 0.355, 1), 
+                        transform 1.2s cubic-bezier(0.215, 0.610, 0.355, 1);
+            will-change: transform, opacity;
+        }
+
+        .oval-reveal {
+            opacity: 0;
+            transform: translateY(40px) scale(0.96);
+            transition: opacity 1.4s cubic-bezier(0.165, 0.84, 0.44, 1), 
+                        transform 1.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            will-change: transform, opacity;
+        }
+
+        .scroll-reveal.reveal-active,
+        .oval-reveal.reveal-active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .delay-1 { transition-delay: 150ms; }
+        .delay-2 { transition-delay: 300ms; }
+        .delay-3 { transition-delay: 450ms; }
+
+        /* ==========================================================================
+           ANIMASI POHON/DAUN TERTIUP ANGIN LEMBUT
+           ========================================================================== */
+        .swaying-leaves {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            pointer-events: none;
+            z-index: 5;
+            opacity: 0.65;
+            will-change: transform;
+        }
+
+        /* CUSTOMIZABLE: Anda bisa mengganti kode warna 'fill=%230B4434' (%23 murni merepresentasikan tanda #) 
+           pada data:image/svg+xml di bawah ini jika warna dedaunan ingin disesuaikan ulang */
+        .leaves-top-left {
+            top: 0;
+            left: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%230B4434'%3E%3Cpath d='M0,0 Q30,20 50,0 Q60,30 30,40 Q10,25 0,0 M0,0 Q50,60 10,80 Q35,50 0,0 M0,0 Q70,20 80,50 Q45,35 0,0'/%3E%3C/svg%3E");
+            transform-origin: top left;
+            /* CUSTOMIZABLE: Ubah angka '7s' (7 detik) untuk mempercepat/memperlambat gerakan ayunan daun kiri */
+            animation: gentle-wind-left 7s ease-in-out infinite alternate;
+        }
+
+        .leaves-top-right {
+            top: 0;
+            right: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%230B4434'%3E%3Cpath d='M100,0 Q70,20 50,0 Q40,30 70,40 Q90,25 100,0 M100,0 Q50,60 90,80 Q65,50 100,0 M100,0 Q30,20 20,50 Q55,35 100,0'/%3E%3C/svg%3E");
+            transform-origin: top right;
+            /* CUSTOMIZABLE: Ubah angka '8s' (8 detik) untuk mempercepat/memperlambat gerakan ayunan daun kanan */
+            animation: gentle-wind-right 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes gentle-wind-left {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(4deg) scale(1.02); }
+            100% { transform: rotate(-2deg) scale(0.99); }
+        }
+
+        @keyframes gentle-wind-right {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(-5deg) scale(1.03); }
+            100% { transform: rotate(3deg) scale(0.98); }
+        }
+
         /* Typography & Custom Titles */
         .script-luxury {
             font-family: 'Great Vibes', cursive;
@@ -85,7 +162,6 @@
             position: relative;
         }
 
-        /* Ornamen Garis Minimalis */
         .divider-line {
             width: 80px;
             height: 1px;
@@ -125,6 +201,7 @@
             width: 100%;
             max-width: 450px;
             height: 100vh;
+            /* CUSTOMIZABLE: Ganti tautan URL di dalam url('...') di bawah ini untuk mengubah gambar latar belakang (background) Cover Depan */
             background: linear-gradient(rgba(244, 234, 230, 0.5), rgba(244, 234, 230, 0.8)), 
                         url('https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?q=80&w=600&auto=format&fit=crop') no-repeat center center;
             background-size: cover;
@@ -136,6 +213,7 @@
             padding: 50px 30px;
             text-align: center;
             transition: transform 1.1s cubic-bezier(0.77, 0, 0.175, 1);
+            overflow: hidden;
         }
 
         #invitation-cover.opened {
@@ -205,6 +283,7 @@
         .hero-interior-page {
             width: 100%;
             height: 100vh;
+            /* CUSTOMIZABLE: Ganti tautan URL di dalam url('...') di bawah ini untuk mengubah gambar latar belakang (background) Halaman Utama Interior setelah dibuka */
             background: linear-gradient(rgba(244, 234, 230, 0.5), rgba(244, 234, 230, 0.8)), 
                         url('https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?q=80&w=600&auto=format&fit=crop') no-repeat center center;
             background-size: cover;
@@ -214,6 +293,8 @@
             align-items: center;
             padding: 50px 30px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
         .hero-interior-page .top-title {
@@ -278,6 +359,7 @@
 
         /* Bagian Mempelai */
         .mempelai-section-bg {
+            /* CUSTOMIZABLE: Ganti tautan URL di dalam url('...') di bawah ini untuk mengubah gambar latar belakang (background) khusus Section Profil Mempelai */
             background: linear-gradient(rgba(244, 234, 230, 0.8), rgba(244, 234, 230, 0.9)), 
                         url('https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?q=80&w=600&auto=format&fit=crop') no-repeat center center;
             background-size: cover;
@@ -414,6 +496,7 @@
             border-bottom-left-radius: 200px;
             border-bottom-right-radius: 200px;
             padding: 60px 25px 50px 25px;
+            /* CUSTOMIZABLE: Ganti tautan URL di dalam url('...') di bawah ini jika ingin mengubah tekstur gambar latar belakang dalam bingkai lengkung modul Event */
             background: linear-gradient(rgba(5, 43, 32, 0.4), rgba(5, 43, 32, 0.75)), 
                         url('https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?q=80&w=600&auto=format&fit=crop') no-repeat center center;
             background-size: cover;
@@ -427,13 +510,13 @@
         .event-detail-row svg { width: 18px; height: 18px; fill: var(--accent-warm-gold); }
         .event-address { font-size: 0.88rem; line-height: 1.6; color: rgba(244, 234, 230, 0.85); max-width: 260px; margin: 12px auto 0 auto; }
         
-        /* MODIFIKASI TERBARU: TOMBOL LIHAT LOKASI KONTRAS TINGGI */
+        /* Tombol Lihat Lokasi Kontras Tinggi */
         .btn-lihat-lokasi { 
             display: inline-flex; 
             align-items: center; 
             gap: 8px; 
-            background-color: var(--bg-cream-accent); /* Latar Belakang Cream Kontras */
-            color: var(--primary-emerald);           /* Teks Emerald Green Pekat */
+            background-color: var(--bg-cream-accent); 
+            color: var(--primary-emerald);           
             text-decoration: none; 
             padding: 10px 28px; 
             font-size: 0.85rem; 
@@ -445,21 +528,14 @@
             transition: transform 0.2s, opacity 0.2s;
         }
         
-        .btn-lihat-lokasi svg {
-            width: 16px;
-            height: 16px;
-            fill: var(--primary-emerald); /* Ikon Mengikuti Warna Emerald */
-        }
-
-        .btn-lihat-lokasi:active {
-            transform: scale(0.97);
-            opacity: 0.9;
-        }
+        .btn-lihat-lokasi svg { width: 16px; height: 16px; fill: var(--primary-emerald); }
+        .btn-lihat-lokasi:active { transform: scale(0.97); opacity: 0.9; }
 
         .flower-separator-img { width: 110px; height: auto; margin: 15px auto 40px auto; display: block; filter: sepia(100%) hue-rotate(320deg) saturate(150%); }
 
         /* Bagian Galeri Kebahagiaan */
         .gallery-section-bg {
+            /* CUSTOMIZABLE: Ganti tautan URL di dalam url('...') di bawah ini jika ingin mengubah gambar latar belakang samar di belakang grid galeri foto */
             background: linear-gradient(rgba(244, 234, 230, 0.85), rgba(244, 234, 230, 0.9)), 
                         url('https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?q=80&w=600&auto=format&fit=crop') no-repeat center center;
             background-size: cover;
@@ -504,6 +580,7 @@
 
         /* Bagian Love Story */
         .story-section-bg {
+            /* CUSTOMIZABLE: Ganti tautan URL di dalam url('...') di bawah ini jika ingin mengubah gambar latar belakang samar modul linimasa cerita (Love Story) */
             background: linear-gradient(rgba(244, 234, 230, 0.9), rgba(244, 234, 230, 0.95)), 
                         url('https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?q=80&w=600&auto=format&fit=crop') no-repeat center center;
             background-size: cover;
@@ -578,10 +655,12 @@
             width: 100%;
             padding: 80px 30px 40px 30px;
             text-align: center;
+            /* CUSTOMIZABLE: Ganti tautan URL di dalam url('...') di bawah ini untuk mengubah gambar latar belakang khusus Section Terima Kasih / Penutup */
             background: linear-gradient(rgba(244, 234, 230, 0.85), rgba(244, 234, 230, 0.88)), 
                         url('https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?q=80&w=600&auto=format&fit=crop') no-repeat center center;
             background-size: cover;
             position: relative;
+            overflow: hidden;
         }
 
         .closing-capsule-frame {
@@ -682,14 +761,21 @@
            1. COVER DEPAN
            ========================================================================== -->
         <div id="invitation-cover">
+            <!-- Elemen Animasi Daun Goyang di Bagian Cover -->
+            <div class="swaying-leaves leaves-top-left"></div>
+            <div class="swaying-leaves leaves-top-right"></div>
+
             <div class="cover-top">
                 <p>Our Wedding Invitation</p>
             </div>
             <div class="cover-middle">
                 <div class="oval-frame">
+                    <!-- CUSTOMIZABLE: Ganti tautan di src="..." dengan URL foto Cover Utama Anda (Rasio Ideal 4:3 Portrait, Min. 800x1066px) -->
                     <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=400&auto=format&fit=crop" alt="Foto Arjun & Salma">
                 </div>
+                <!-- CUSTOMIZABLE: Nama Pengantin Utama di Cover -->
                 <h1 class="script-luxury">Arjun & Salma</h1>
+                <!-- CUSTOMIZABLE: Tanggal Pernikahan di Cover -->
                 <p class="cover-date">Sabtu, 20 Juni 2026</p>
                 <div class="guest-box">
                     <span class="dear-text">Dear:</span>
@@ -715,81 +801,104 @@
 
             <!-- TAB 1: HOME PAGE UTAMA -->
             <div id="section-home" class="hero-interior-page">
-                <p class="top-title">Our Wedding Invitation</p>
-                <div class="oval-frame">
+                <!-- Elemen Animasi Daun Goyang di Halaman Interior Utama -->
+                <div class="swaying-leaves leaves-top-left"></div>
+                <div class="swaying-leaves leaves-top-right"></div>
+
+                <p class="top-title scroll-reveal">Our Wedding Invitation</p>
+                <div class="oval-frame oval-reveal delay-1">
+                    <!-- CUSTOMIZABLE: Ganti tautan di src="..." dengan URL foto Pembuka Interior Anda (Rasio Ideal 4:3 Portrait, Min. 800x1066px) -->
                     <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=400&auto=format&fit=crop" alt="Foto Arjun & Salma">
                 </div>
-                <h1 class="script-luxury">Arjun & Salma</h1>
-                <p class="interior-date">Sabtu, 20 Juni 2026</p>
+                <!-- CUSTOMIZABLE: Nama Utama di Halaman Dalam -->
+                <h1 class="script-luxury scroll-reveal delay-2">Arjun & Salma</h1>
+                <!-- CUSTOMIZABLE: Tanggal Pernikahan Halaman Dalam -->
+                <p class="interior-date scroll-reveal delay-3">Sabtu, 20 Juni 2026</p>
             </div>
 
             <!-- HALAMAN AYAT QURAN -->
             <div class="quran-verse-page">
-                <div class="divider-line"></div>
-                <div class="quran-arabic">
-                    وَمِنْ اٰيٰتِهٖٓ اَنْ خَلَقَ لَكُمْ مِّنْ اَنْفُسِكُمْ اَزْوَاجًا لِّتَسْكُنُوْٓا اِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَّوَدَّةً وَرَحْمَةً ۗ اِنَّ فِيْ ذٰلِكَ لَاٰيٰتٍ لِّقَوْمٍ يَّتَفَكَّرُوْنَ
+                <div class="divider-line scroll-reveal"></div>
+                <!-- CUSTOMIZABLE: Teks Ayat Suci Al-Qur'an (Bisa diganti surat atau kutipan Alkitab/Lainnya) -->
+                <div class="quran-arabic scroll-reveal delay-1">
+                   وَمِنْ اٰيٰتِهٖٓ اَنْ خَلَقَ لَكُمْ مِّنْ اَنْفُسِكُمْ اَزْوَاجًا لِّتَسْكُنُوْٓا اِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَّوَدَّةً وَرَحْمَةً ۗ اِنَّ فِيْ ذٰلِكَ لَاٰيٰتٍ قَوْمٍ يَّتَفَكَّرُوْنَ
                 </div>
-                <div class="quran-translation">
+                <!-- CUSTOMIZABLE: Teks Arti / Terjemahan Ayat -->
+                <div class="quran-translation scroll-reveal delay-2">
                     "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir."
                 </div>
-                <div class="quran-surah-name">
+                <!-- CUSTOMIZABLE: Nama Surah dan Nomor Ayat -->
+                <div class="quran-surah-name scroll-reveal delay-3">
                     ( QS. Ar-Rum : 21 )
                 </div>
-                <div class="divider-line"></div>
+                <div class="divider-line scroll-reveal"></div>
             </div>
 
             <!-- TAB 2: MEMPELAI SECTION -->
             <div id="section-mempelai" class="section-padding mempelai-section-bg">
-                <h2 class="serif-title" style="font-size: 2rem; margin-bottom: 10px;">Assalamu’alaikum Wr. Wb.</h2>
-                <div class="divider-line"></div>
-                <p class="mempelai-intro-text">
+                <h2 class="serif-title scroll-reveal" style="font-size: 2rem; margin-bottom: 10px;">Assalamu’alaikum Wr. Wb.</h2>
+                <div class="divider-line scroll-reveal"></div>
+                <p class="mempelai-intro-text scroll-reveal delay-1">
                     Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i, serta kerabat sekalian, untuk menghadiri acara pernikahan kami:
                 </p>
 
                 <!-- Profil Mempelai Wanita -->
                 <div class="mempelai-card">
-                    <div class="oval-frame" style="width: 210px; height: 290px; border-radius: 105px; margin-bottom: 20px;">
+                    <div class="oval-frame oval-reveal" style="width: 210px; height: 290px; border-radius: 105px; margin-bottom: 20px;">
+                        <!-- CUSTOMIZABLE: URL Foto Mempelai Wanita (Rasio Ideal 3:4 Portrait, Min. 600x800px) -->
                         <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400&auto=format&fit=crop" alt="Salma Salsabila">
                     </div>
-                    <h3>Salma Salsabila</h3>
-                    <p class="ortu">Putri Kelima Dari<br>Bapak Muplihin &amp; Ibu Mimin Rusmina</p>
-                    <a href="https://instagram.com" target="_blank" class="btn-instagram">
-                        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-                        instagram
-                    </a>
+                    <!-- CUSTOMIZABLE: Nama Lengkap Mempelai Wanita -->
+                    <h3 class="scroll-reveal delay-1">Salma Salsabila</h3>
+                    <!-- CUSTOMIZABLE: Nama Orang Tua Mempelai Wanita -->
+                    <p class="ortu scroll-reveal delay-2">Putri Kelima Dari<br>Bapak Muplihin &amp; Ibu Mimin Rusmina</p>
+                    <div class="scroll-reveal delay-3" style="margin-top: 15px;">
+                        <!-- CUSTOMIZABLE: Ganti href="..." dengan tautan akun Instagram Mempelai Wanita -->
+                        <a href="https://instagram.com" target="_blank" class="btn-instagram">
+                            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                            instagram
+                        </a>
+                    </div>
                 </div>
 
-                <div class="catin-separator"><span>&</span></div>
+                <div class="catin-separator scroll-reveal"><span>&</span></div>
 
                 <!-- Profil Mempelai Pria -->
                 <div class="mempelai-card">
-                    <div class="oval-frame" style="width: 210px; height: 290px; border-radius: 105px; margin-bottom: 20px;">
+                    <div class="oval-frame oval-reveal" style="width: 210px; height: 290px; border-radius: 105px; margin-bottom: 20px;">
+                        <!-- CUSTOMIZABLE: URL Foto Mempelai Pria (Rasio Ideal 3:4 Portrait, Min. 600x800px) -->
                         <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop" alt="Arjun Ibrahim">
                     </div>
-                    <h3>Arjun Ibrahim</h3>
-                    <p class="ortu">Putra Kedua Dari<br>Alm. Bapak Udin Jaenudin MZ<br>&amp; Ibu Neneng siti hodijah</p>
-                    <a href="https://instagram.com" target="_blank" class="btn-instagram">
-                        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-                        instagram
-                    </a>
+                    <!-- CUSTOMIZABLE: Nama Lengkap Mempelai Pria -->
+                    <h3 class="scroll-reveal delay-1">Arjun Ibrahim</h3>
+                    <!-- CUSTOMIZABLE: Nama Orang Tua Mempelai Pria -->
+                    <p class="ortu scroll-reveal delay-2">Putra Kedua Dari<br>Alm. Bapak Udin Jaenudin MZ<br>&amp; Ibu Neneng siti hodijah</p>
+                    <div class="scroll-reveal delay-3" style="margin-top: 15px;">
+                        <!-- CUSTOMIZABLE: Ganti href="..." dengan tautan akun Instagram Mempelai Pria -->
+                        <a href="https://instagram.com" target="_blank" class="btn-instagram">
+                            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                            instagram
+                        </a>
+                    </div>
                 </div>
             </div>
 
             <!-- TAB 3: EVENT/ACARA SECTION -->
             <div id="section-event" class="section-padding event-section-bg">
-                <h2 class="save-the-date-title">Save The Date</h2>
+                <h2 class="save-the-date-title scroll-reveal">Save The Date</h2>
 
-                <div class="countdown-container">
+                <div class="countdown-container scroll-reveal delay-1">
                     <div class="countdown-item"><span id="days">0</span><label>Hari</label></div>
                     <div class="countdown-item"><span id="hours">0</span><label>Jam</label></div>
                     <div class="countdown-item"><span id="minutes">0</span><label>Menit</label></div>
                     <div class="countdown-item"><span id="seconds">0</span><label>Detik</label></div>
                 </div>
 
-                <div class="arch-event-container">
+                <div class="arch-event-container scroll-reveal delay-2">
                     <div class="event-block">
                         <h3>Akad Nikah</h3>
                         <div class="horizontal-line"></div>
+                        <!-- CUSTOMIZABLE: Detail Waktu & Tanggal Akad Nikah -->
                         <div class="event-detail-row">
                             <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7v-5z"/></svg>
                             <span>Sabtu, 20 Juni 2026</span>
@@ -798,20 +907,22 @@
                             <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
                             <span>Pukul : 09.00 - Selesai</span>
                         </div>
+                        <!-- CUSTOMIZABLE: Alamat Lokasi Teks Akad Nikah -->
                         <p class="event-address">Kp. Rancapanggung Rt03/Rw09<br>Kec. Cililin Kab. Bandung Barat</p>
                         
-                        <!-- Tombol Lihat Lokasi Baru - Kontras Tinggi -->
+                        <!-- CUSTOMIZABLE: Ganti tautan di href="..." dengan link Google Maps titik lokasi Akad Nikah -->
                         <a href="https://maps.google.com" target="_blank" class="btn-lihat-lokasi">
                             <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
                             Lihat Lokasi
                         </a>
                     </div>
 
-                    <img src="https://i.ibb.co/6R0mY9v/flower-clipart.png" class="flower-separator-img" alt="Ornamen Bunga">
+                    <img src="https://i.ibb.co/6R0mY9v/flower-clipart.png" class="flower-separator-img scroll-reveal" alt="Ornamen Bunga">
 
                     <div class="event-block" style="margin-bottom: 10px;">
                         <h3>Resepsi</h3>
                         <div class="horizontal-line"></div>
+                        <!-- CUSTOMIZABLE: Detail Waktu & Tanggal Resepsi -->
                         <div class="event-detail-row">
                             <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7v-5z"/></svg>
                             <span>Sabtu, 20 Juni 2026</span>
@@ -820,9 +931,10 @@
                             <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
                             <span>Pukul : 12.00 - Selesai</span>
                         </div>
+                        <!-- CUSTOMIZABLE: Alamat Lokasi Teks Resepsi -->
                         <p class="event-address">Kp. Rancapanggung Rt03/Rw09<br>Kec. Cililin Kab. Bandung Barat</p>
                         
-                        <!-- Tombol Lihat Lokasi Baru - Kontras Tinggi -->
+                        <!-- CUSTOMIZABLE: Ganti tautan di href="..." dengan link Google Maps titik lokasi Resepsi -->
                         <a href="https://maps.google.com" target="_blank" class="btn-lihat-lokasi">
                             <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
                             Lihat Lokasi
@@ -834,22 +946,23 @@
             <!-- TAB 4: GALLERY SECTION -->
             <div id="section-gallery" class="section-padding gallery-section-bg">
                 <h2 class="serif-title">Gallery</h2>
-                <div class="divider-line"></div>
-                <p class="gallery-intro-text">
+                <div class="divider-line scroll-reveal"></div>
+                <p class="gallery-intro-text scroll-reveal delay-1">
                     Kami bersyukur, dipertemukan Allah diwaktu terbaik, Kini kami menanti hari istimewa kami.
                 </p>
                 
                 <div class="gallery-portrait-grid">
-                    <div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=600')">
+                    <!-- CUSTOMIZABLE: Ganti tautan di src="..." & openLightbox('...') dengan URL Foto-Foto Galeri Anda (Rasio Ideal Portrait 2:3 atau 3:4, Min. 600x900px) -->
+                    <div class="gallery-item oval-reveal" onclick="openLightbox('https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=600')">
                         <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=400" alt="Galeri Pernikahan 1">
                     </div>
-                    <div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600')">
+                    <div class="gallery-item oval-reveal delay-1" onclick="openLightbox('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600')">
                         <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=400" alt="Galeri Pernikahan 2">
                     </div>
-                    <div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=600')">
+                    <div class="gallery-item oval-reveal" onclick="openLightbox('https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=600')">
                         <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=400" alt="Galeri Pernikahan 3">
                     </div>
-                    <div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=600')">
+                    <div class="gallery-item oval-reveal delay-1" onclick="openLightbox('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=600')">
                         <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=400" alt="Galeri Pernikahan 4">
                     </div>
                 </div>
@@ -857,11 +970,12 @@
 
             <!-- TAB 5: LOVE STORY SECTION -->
             <div id="section-story" class="section-padding story-section-bg" style="padding-top: 30px;">
-                <h2 class="serif-title">Love Story</h2>
-                <div class="divider-line"></div>
+                <h2 class="serif-title scroll-reveal">Love Story</h2>
+                <div class="divider-line scroll-reveal"></div>
                 
                 <div class="clean-timeline">
-                    <div class="timeline-node">
+                    <!-- CUSTOMIZABLE: Isi Paragraf Judul & Cerita Linimasa 1 -->
+                    <div class="timeline-node scroll-reveal">
                         <div class="node-circle"></div>
                         <div class="node-header"><h3>Perkenalan</h3></div>
                         <div class="node-body-card">
@@ -869,7 +983,8 @@
                         </div>
                     </div>
 
-                    <div class="timeline-node">
+                    <!-- CUSTOMIZABLE: Isi Paragraf Judul & Cerita Linimasa 2 -->
+                    <div class="timeline-node scroll-reveal">
                         <div class="node-circle"></div>
                         <div class="node-header"><h3>Menjalin Hubungan</h3></div>
                         <div class="node-body-card">
@@ -877,7 +992,8 @@
                         </div>
                     </div>
 
-                    <div class="timeline-node" style="margin-bottom: 10px;">
+                    <!-- CUSTOMIZABLE: Isi Paragraf Judul & Cerita Linimasa 3 -->
+                    <div class="timeline-node scroll-reveal" style="margin-bottom: 10px;">
                         <div class="node-circle"></div>
                         <div class="node-header"><h3>Pernikahan</h3></div>
                         <div class="node-body-card">
@@ -889,36 +1005,41 @@
 
             <!-- TAB 6: WEDDING GIFT SECTION -->
             <div id="section-gift" class="section-padding gift-section-bg">
-                <div class="header-with-lines">
+                <div class="header-with-lines scroll-reveal">
                     <div class="horizontal-line"></div>
                     <h2>Wedding Gift</h2>
                     <div class="horizontal-line"></div>
                 </div>
 
-                <p class="gift-intro-narrative">
+                <p class="gift-intro-narrative scroll-reveal delay-1">
                     Kehadiran Anda merupakan sebuah do'a serta rasa syukur bagi kami, namun jika memberi adalah bentuk Do'a &amp; cinta kasih bagi Anda, Anda dapat memberi kado secara cashless dan kami akan senang hati menerimanya dan tentu semakin melengkapi kebahagiaan kami.
                 </p>
 
-                <div class="white-address-card">
+                <!-- CUSTOMIZABLE: Detail Alamat Pengiriman Kado Fisik -->
+                <div class="white-address-card scroll-reveal delay-2">
                     <h4>Penerima Kado: Arjun ibrahim</h4>
                     <p>Kontrakan Samping Belakang BRI, KP Karajan, RT.01/RW.05, Desa Cibungur Kab. Purwakarta</p>
                 </div>
 
                 <div class="bank-cards-container">
-                    <div class="bank-inline-card">
+                    <!-- CUSTOMIZABLE: Data Rekening Bank 1 -->
+                    <div class="bank-inline-card scroll-reveal">
                         <div class="bank-name">BANK BCA</div>
                         <div class="account-number">6040981234</div>
                         <div class="account-holder">a.n. Arjun Ibrahim</div>
+                        <!-- Harap sesuaikan parameter text di dalam copyAccountText('...') agar fungsi salin bekerja tepat -->
                         <button class="btn-copy-instant" onclick="copyAccountText('6040981234')">
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
                             Salin Rekening
                         </button>
                     </div>
 
-                    <div class="bank-inline-card">
+                    <!-- CUSTOMIZABLE: Data Rekening Bank 2 -->
+                    <div class="bank-inline-card scroll-reveal">
                         <div class="bank-name">BANK MANDIRI</div>
                         <div class="account-number">1310017894523</div>
                         <div class="account-holder">a.n. Arjun Ibrahim</div>
+                        <!-- Harap sesuaikan parameter text di dalam copyAccountText('...') agar fungsi salin bekerja tepat -->
                         <button class="btn-copy-instant" onclick="copyAccountText('1310017894523')">
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
                             Salin Rekening
@@ -926,9 +1047,11 @@
                     </div>
                 </div>
 
-                <div class="qris-payment-block">
+                <!-- CUSTOMIZABLE: Barcode / QRIS Elemen Gambar -->
+                <div class="qris-payment-block scroll-reveal">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Logo_QRIS.svg" class="qris-logo-header" alt="Logo QRIS">
                     <div class="qris-image-frame">
+                        <!-- Jika menggunakan QRIS Statis murni berbentuk gambar berkas, ganti tautan src dengan URL gambar QRIS Anda -->
                         <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=Wedding-Arjun-Salma" alt="Barcode QRIS">
                     </div>
                     <p>Silakan pindai atau simpan kode QRIS di atas untuk melakukan transfer amplop digital melalui e-wallet maupun mobile banking Anda.</p>
@@ -937,13 +1060,13 @@
 
             <!-- TAB 7: RSVP SECTION -->
             <div id="section-wishes" class="section-padding rsvp-section-bg">
-                <div class="header-with-lines">
+                <div class="header-with-lines scroll-reveal">
                     <div class="horizontal-line"></div>
                     <h2>RSVP</h2>
                     <div class="horizontal-line"></div>
                 </div>
 
-                <div class="rsvp-clean-form">
+                <div class="rsvp-clean-form scroll-reveal delay-1">
                     <form id="rsvp-form" onsubmit="kirimUcapan(event)">
                         <div class="form-group">
                             <label for="input-nama">Nama</label>
@@ -978,7 +1101,7 @@
                     </form>
                 </div>
 
-                <div class="ucapan-feed-area" id="box-ucapan">
+                <div class="ucapan-feed-area scroll-reveal delay-2" id="box-ucapan">
                     <div class="ucapan-card-item">
                         <span class="ucapan-card-title">Rian Anggara</span>
                         <span class="ucapan-card-count">2 orang</span>
@@ -993,22 +1116,28 @@
                 <img id="gsc-lightbox-img" src="" alt="Pembesar Gambar">
             </div>
 
-            <!-- TAB 8: PENUTUP UCAPAN TERIMA KASIH (Mockup 10) -->
+            <!-- TAB 8: PENUTUP UCAPAN TERIMA KASIH -->
             <div class="thankyou-section-luxury">
-                <div class="closing-capsule-frame">
+                <!-- Elemen Animasi Daun Goyang di Bagian Penutup Terima Kasih -->
+                <div class="swaying-leaves leaves-top-left"></div>
+                <div class="swaying-leaves leaves-top-right"></div>
+
+                <div class="closing-capsule-frame oval-reveal">
+                    <!-- CUSTOMIZABLE: URL Foto Bersanding Penutup (Rasio Ideal Portrait 2:3, Min. 800x1200px) -->
                     <img src="https://images.unsplash.com/photo-1519225495810-7512c696505a?q=80&w=400&auto=format&fit=crop" alt="Foto Bersanding Arjun & Salma">
                 </div>
 
-                <p class="thankyou-paragraph-text">
+                <p class="thankyou-paragraph-text scroll-reveal delay-1">
                     Merupakan suatu kehormatan dan kebahagiaan bagi kami, apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu. Atas kehadiran dan doa restunya, kami mengucapkan terima kasih.
                 </p>
 
-                <div class="signature-intro-label">Kami yang berbahagia,</div>
-                <div class="signature-couple-name">Arjun &amp; Salma</div>
+                <div class="signature-intro-label scroll-reveal delay-2">Kami yang berbahagia,</div>
+                <!-- CUSTOMIZABLE: Nama Tanda Tangan Kaligrafi Penutup -->
+                <div class="signature-couple-name scroll-reveal delay-3">Arjun &amp; Salma</div>
             </div>
 
             <!-- SECTION BRANDING ATRIBUSI KAYUNA STUDIO ELEGAN -->
-            <footer class="kayuna-branding-footer">
+            <footer class="kayuna-branding-footer scroll-reveal">
                 <p>Designed &amp; Crafted with Love by</p>
                 <a href="https://kayuna.studio" target="_blank" class="studio-link">Kayuna Studio</a>
             </footer>
@@ -1024,7 +1153,7 @@
                     <span>Mempelai</span>
                 </a>
                 <a href="#section-event" class="nav-item" onclick="setNavActive(this)">
-                    <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7v-5z"/></svg>
                     <span>Event</span>
                 </a>
                 <a href="#section-gallery" class="nav-item" onclick="setNavActive(this)">
@@ -1043,6 +1172,7 @@
 
     <!-- AUDIO BACKGROUND TRADISIONAL AKUSTIK -->
     <audio id="bg-music" loop>
+        <!-- CUSTOMIZABLE: Ganti tautan URL di dalam src="..." di bawah ini dengan link berkas audio .mp3 latar belakang Anda -->
         <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mpeg">
     </audio>
 
@@ -1062,9 +1192,35 @@
         function openInvitation() {
             cover.classList.add('opened');
             mainContent.classList.add('show');
+            
+            setTimeout(initScrollReveal, 100);
+
             music.play().then(() => { 
                 musicBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>'; 
             });
+        }
+
+        function initScrollReveal() {
+            const itemsToReveal = document.querySelectorAll('.scroll-reveal, .oval-reveal');
+            
+            const revealCallback = (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('reveal-active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            };
+
+            const options = {
+                root: null, 
+                rootMargin: '0px 0px -40px 0px', 
+                /* CUSTOMIZABLE: Ubah angka threshold (0.0 sampai 1.0) untuk mengatur seberapa dalam elemen harus masuk ke layar sebelum memicu animasi bergoyang/muncul */
+                threshold: 0.12 
+            };
+
+            const observer = new IntersectionObserver(revealCallback, options);
+            itemsToReveal.forEach(item => observer.observe(item));
         }
 
         function toggleMusic() {
@@ -1102,8 +1258,10 @@
             });
         }
 
-        // Timer target Juni 2026
+        // CUSTOMIZABLE: Sesuaikan Target Countdown Timer Akhir (Format: Tahun, Bulan-1, Tanggal, Jam, Menit, Detik)
+        // Ingat! Bulan di Javascript dimulai dari angka 0 (Januari=0, Juni=5, Desember=11)
         const targetDate = new Date(2026, 5, 20, 09, 00, 00).getTime(); 
+        
         setInterval(function() {
             const distance = targetDate - new Date().getTime();
             if (distance < 0) {
